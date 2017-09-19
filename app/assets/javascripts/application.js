@@ -11,5 +11,13 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery
 //= require turbolinks
+//= require materialize-sprockets
 //= require_tree .
+
+var formsInit = function() {
+    $('select').material_select();
+};
+$(document).on('turbolinks:load', formsInit);
+$(document).on('page:load', formsInit) //adaptation to turbolinks
