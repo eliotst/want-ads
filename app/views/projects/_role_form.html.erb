@@ -1,0 +1,14 @@
+<div class="input-field col s12">
+    <%= form.label :title %>
+    <%= form.text_field :title, :class => "materialize-textarea" %>
+</div>
+<div class="input-field col s12">
+    <%= form.label :description %>
+    <%= form.text_area :description, :class => "materialize-textarea" %>
+</div>
+<% if role.id %>
+    <div class="col s12">
+        <%= form.check_box :_destroy %>
+        <%= form.label :_destroy, "Remove Role" %>
+    </div>
+<% end %>

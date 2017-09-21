@@ -1,0 +1,33 @@
+<div class="row">
+    <h2>Projects</h2>
+    <div class="card">
+        <div class="card-content">
+            <table class="bordered centered">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Project Title</th>
+                        <th>Person</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @roles.each do |role| %>
+                        <tr onclick="">
+                            <td><%= role.title %></td>
+                            <td><%= role.project.title %></td>
+                            <td>
+                                <%= role.try(:person).try(:full_name) || "No One" %>
+                            </td>
+                            <td>
+                                <%= link_to 'Show', role_path(role), :class => "btn" %>
+                            </td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            <a href="<%= new_role_path %>" class="btn-floating halfway-fab waves-effect waves-light red">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
+    </div>
+</div>

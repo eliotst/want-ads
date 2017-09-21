@@ -5,19 +5,28 @@
                 <span class="card-title">
                     <%= @project.title %>
                 </span>
-                <p>
-                    <h5>
-                        <%= @project.state.upcase %>
-                    </h5>
-                </p>
-                <p>
-                    <strong>Organizer:</strong>
-                    <%= @project.try(:person).try(:first_name) || "No One" %>
-                </p>
-                <p>
-                    <strong>Description:</strong>
-                    <%= @project.description %>
-                </p>
+                <div class="row">
+                    <div class="col s12">
+                        <p>
+                            <h5>
+                                <%= @project.state.upcase %>
+                            </h5>
+                        </p>
+                        <p>
+                            <strong>Organizer:</strong>
+                            <%= @project.try(:person).try(:full_name) || "No One" %>
+                        </p>
+                        <p>
+                            <strong>Description:</strong>
+                            <%= @project.description %>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <% @project.roles.each do |role| %>
+                        <%= render "role", :role => role %>
+                    <% end %>
+                </div>
                 <a href="<%= edit_project_path(@project) %>" class="btn-floating halfway-fab waves-effect waves-light red">
                     <i class="material-icons">edit</i>
                 </a>

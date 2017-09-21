@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170917175628) do
+ActiveRecord::Schema.define(version: 20170920110157) do
+
+  create_table "interests", force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_interests_on_person_id"
+    t.index ["role_id"], name: "index_interests_on_role_id"
+  end
 
   create_table "people", force: :cascade do |t|
     t.string "email"
@@ -20,7 +29,25 @@ ActiveRecord::Schema.define(version: 20170917175628) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "projects" because of following StandardError
-#   Unknown type 'reference' for column 'person'
+  create_table "projects", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "person_id"
+    t.index ["person_id"], name: "index_projects_on_person_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.integer "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "person_id"
+    t.index ["person_id"], name: "index_roles_on_person_id"
+    t.index ["project_id"], name: "index_roles_on_project_id"
+  end
 
 end

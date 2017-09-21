@@ -1,0 +1,14 @@
+<%= fields_for :organizer, person do |person_form| %>
+    <div class="input-field col s12">
+        <%= person_form.label :first_name %>
+        <%= person_form.text_field :first_name %>
+    </div>
+    <div class="input-field col s12">
+        <%= person_form.label :last_name %>
+        <%= person_form.text_field :last_name %>
+    </div>
+    <div class="input-field col s12">
+        <%= person_form.label :email %>
+        <%= person_form.text_field :email %>
+    </div>
+<% end %>
