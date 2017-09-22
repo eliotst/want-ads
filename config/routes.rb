@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   end
   resources :interests
 
-  root 'projects#index'
+  root 'roles#index'
 end

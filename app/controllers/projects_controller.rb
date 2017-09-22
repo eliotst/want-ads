@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
     end
 
     def update
-        person = find_or_create_person()
+        person = find_or_create_organizer()
         @project = Project.find(params[:id])
         @project.person = person
         if @project.update(project_params)

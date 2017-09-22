@@ -1,8 +1,13 @@
 <div class="row">
-    <h2>Projects</h2>
     <div class="card">
+        <div class="card-image empty">
+            <span class="card-title">Projects</span>
+            <a href="<%= new_project_path %>" class="btn-floating halfway-fab waves-effect waves-light red">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
         <div class="card-content">
-            <table class="bordered centered">
+            <table class="centered bordered">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -22,9 +27,6 @@
                     <% end %>
                 </tbody>
             </table>
-            <a href="<%= new_project_path %>" class="btn-floating halfway-fab waves-effect waves-light red">
-                <i class="material-icons">add</i>
-            </a>
         </div>
     </div>
 </div>

@@ -1,34 +1,30 @@
-<div class="col s4">
+<div class="col s6">
     <div class="card">
-        <div class="card-content">
+        <div class="card-image empty">
             <span class="card-title">
                 <%= role.title %>
             </span>
-            <p>
-                <strong>Description:</strong>
-                <%= role.description %>
-            </p>
-            <% if role.person != nil %>
-                <p>
-                    <strong>Volunteer:</strong>
-                    <%= role.person.full_name %>
-                </p>
-            <% else %>
-                <%= render 'role_interest', role: role %>
-            <% end %>
-        </div>
-        <div class="card-action">
-            <a href="<%= role_path(role) %>">
-                Show
-            </a>
-            <% if role.person == nil %>
-                <a href="<%= new_interest_path(:role_id => role.id) %>">
-                    Interested?
-                </a>
-            <% end %>
             <a href="<%= edit_role_path(role) %>" class="btn-floating halfway-fab waves-effect waves-light red">
                 <i class="material-icons">edit</i>
             </a>
+        </div>
+        <div class="card-action">
+            <%= link_to "More Info", role_path(role), class: "btn" %>
+            <% if role.person == nil %>
+                <%= link_to "Interested?", new_interest_path(role_id: role.id), class: "btn" %>
+            <% end %>
+        </div>
+        <div class="card-content">
+            <div class="volunteer">
+            <% if role.person != nil %>
+                <%= role.person.full_name %>
+            <% else %>
+                No Volunteer Assigned
+            <% end %>
+            </div>
+            <div class="description">
+                <%= role.description %>
+            </div>
         </div>
     </div>
 </div>

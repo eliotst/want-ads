@@ -10,9 +10,13 @@
   </head>
 
   <body class="grey lighten-4">
-    <nav class="light-blue lighten-1">
+    <nav class="blue darken-3">
       <div class="nav-wrapper container">
-        <a href="/">Want Ads</a>
+        <a class="brand-logo" href="/">Want Ads</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><%= link_to "Volunteer Opportunities", :roles %></li>
+          <li><%= link_to "Projects Underway", :projects %></li>
+        </ul>
       </div>
     </nav>
     <div class="container">

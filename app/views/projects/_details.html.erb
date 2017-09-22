@@ -1,0 +1,13 @@
+<div>
+    <h5>
+        <%= project.state.upcase %>
+    </h5>
+</div>
+<div>
+    <strong>Organizer:</strong>
+    <%= project.try(:person).try(:full_name) || "No One" %>
+</div>
+<div>
+    <strong>Description:</strong>
+    <%= project.description %>
+</div>

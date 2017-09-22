@@ -1,19 +1,28 @@
-<div>
-    <strong>Interested</strong>
-    <ul class="collection">
+<div class="card">
+    <div class="card-content">
+        <span class="card-title">Interested People</span>
         <% if @role.interests.length > 0 %>
-            <% @role.interests.each do |interest| %>
-                    <li>
-                        <%= interest.person.full_name %>
-                        <%= form_for @role, url: assign_role_path(@role) do |form| %>
-                            <%= form.hidden_field :person_id, value: interest.person.id %>
-                            <button class="waves-effect waves-teal btn" type="submit">Assign</button>
-                        <% end %>
-                        <%= button_to "Not Interested", interest_path(interest), method: :delete, class: "btn" %>
-                    </li>
-            <% end %>
+            <ul class="collection">
+                <% @role.interests.each do |interest| %>
+                        <li class="collection-item">
+                            <%= interest.person.full_name %>
+                            <%= form_for @role, url: assign_role_path(@role), html: { class: "flat" } do |form| %>
+                                <%= form.hidden_field :person_id, value: interest.person.id %>
+                                <button class="btn-floating horizontal waves-effect waves-light red" type="submit">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            <% end %>
+                            <%= form_for interest, method: :delete, html: { class: "flat" } do |form| %>
+                                <%= form.hidden_field :person_id, value: interest.person.id %>
+                                <button class="btn-floating horizontal waves-effect waves-light red" type="submit">
+                                    <i class="material-icons">cancel</i>
+                                </button>
+                            <% end %>
+                        </li>
+                <% end %>
+            </ul>
         <% else %>
-            <li>None</li>
+            <p>No one has expressed interest in this role, yet.</p>
         <% end %>
-    </ul>
+    </div>
 </div>
