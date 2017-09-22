@@ -1,0 +1,19 @@
+<div>
+    <strong>Interested</strong>
+    <ul class="collection">
+        <% if @role.interests.length > 0 %>
+            <% @role.interests.each do |interest| %>
+                    <li>
+                        <%= interest.person.full_name %>
+                        <%= form_for @role, url: assign_role_path(@role) do |form| %>
+                            <%= form.hidden_field :person_id, value: interest.person.id %>
+                            <button class="waves-effect waves-teal btn" type="submit">Assign</button>
+                        <% end %>
+                        <%= button_to "Not Interested", interest_path(interest), method: :delete, class: "btn" %>
+                    </li>
+            <% end %>
+        <% else %>
+            <li>None</li>
+        <% end %>
+    </ul>
+</div>

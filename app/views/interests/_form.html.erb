@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <%= form_for @interest do |form| %>
+                <div class="card-content">
+                    <span class="card-title">Interested in Role?</span>
+                    <div class="row">
+                        <% if @interest.errors.any? %>
+                            <div id="error_explanation">
+                                <h2>
+                                    <%= pluralize(@interest.errors.count, "error") %> errors:
+                                </h2>
+                                <ul>
+                                    <% @interest.errors.full_messages.each do |msg| %>
+                                        <li><%= msg %></li>
+                                    <% end %>
+                                </ul>
+                            </div>
+                        <% end %>
+                        <div class="col s12">
+                            <strong>Project:</strong>
+                            <span><%= @interest.role.project.title %>
+                        </div>
+                        <div class="col s12">
+                            <p>
+                                <strong>Role:</strong>
+                                <span><%= @interest.role.title %></span>
+                            </p>
+                            <p>
+                                <%= @interest.role.description %>
+                                <%= form.hidden_field :role_id, value: @interest.role.id %>
+                            </p>
+                        </div>
+                        <%= render "volunteer_form", :person => @interest.person %>
+                    </div>
+                    <div class="center">
+                        <button class="waves-effect waves-teal btn" type="submit">I am Interested</button>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+

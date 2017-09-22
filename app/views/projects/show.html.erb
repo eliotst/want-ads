@@ -22,15 +22,15 @@
                         </p>
                     </div>
                 </div>
-                <div class="row">
-                    <% @project.roles.each do |role| %>
-                        <%= render "role", :role => role %>
-                    <% end %>
-                </div>
                 <a href="<%= edit_project_path(@project) %>" class="btn-floating halfway-fab waves-effect waves-light red">
                     <i class="material-icons">edit</i>
                 </a>
             </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <% @project.roles.each do |role| %>
+        <%= render "role", :role => role %>
+    <% end %>
 </div>

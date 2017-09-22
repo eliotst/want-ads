@@ -1,4 +1,5 @@
 class Role < ApplicationRecord
   belongs_to :project
-  belongs_to :person
+  belongs_to :person, optional: true
+  has_many :interests
 end

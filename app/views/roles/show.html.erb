@@ -19,8 +19,19 @@
                             <strong>Description:</strong>
                             <%= @role.description %>
                         </p>
+                        <% if @role.person == nil %>
+                            <%= render 'role_interest' %>
+                        <% end %>
                     </div>
                 </div>
+            </div>
+            <div class="card-action">
+                <% if @role.person != nil %>
+                    <%= link_to "Unassign", unassign_role_path(@role), method: :patch %>
+                <% end %>
+                <a href="<%= new_interest_path(:role_id => @role.id) %>">
+                    Interested?
+                </a>
                 <a href="<%= edit_role_path(@role) %>" class="btn-floating halfway-fab waves-effect waves-light red">
                     <i class="material-icons">edit</i>
                 </a>

@@ -34,6 +34,22 @@ class RolesController < ApplicationController
         end
     end
 
+    def assign
+        @role = Role.find(params[:id])
+        assign_params = params.require(:role).permit(:person_id)
+        # TOOD: error handling
+        @role.update(assign_params)
+        redirect_to @role
+    end
+
+    def unassign
+        @role = Role.find(params[:id])
+        @role.person = nil
+        @role.save
+        puts @role.errors.full_messages
+        redirect_to @role
+    end
+
     private
         def find_or_create_volunteer()
             person_params = params.require(:volunteer).permit(:first_name, :last_name, :email)
