@@ -1,0 +1,13 @@
+<h1>New Interest</h1>
+<p>
+    <strong>Project:</strong>
+    <%= @interest.role.project.title %>
+</p>
+<p>
+    <strong>Role:</strong>
+    <%= @interest.role.title %>
+</p>
+<p>
+    <strong>Person:</strong>
+    <%= @interest.person.full_name %> (<%= @interest.person.email %>)
+</p>

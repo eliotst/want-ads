@@ -10,7 +10,11 @@
                 </a>
             </div>
             <div class="card-action">
-                <%= link_to "I am Interested", new_interest_path(role_id: @role.id), class: "btn" %>
+                <% if @role.person == nil %>
+                    <%= link_to "I am Interested", new_interest_path(role_id: @role.id), class: "btn" %>
+                <% else %>
+                    <%= link_to "Unassign", unassign_role_path(@role), method: :patch, class: "btn" %>
+                <% end %>
             </div>
             <div class="card-content">
                 <div class="row">
@@ -21,9 +25,6 @@
                         <div class="role-volunteer">
                             <strong>Assigned Volunteer:</strong>
                             <%= @role.try(:person).try(:full_name) || "No One" %>
-                            <% if @role.person != nil %>
-                                <%= link_to "Unassign", unassign_role_path(@role), method: :patch %>
-                            <% end %>
                         </div>
                         <p>
                             <%= @role.description %>

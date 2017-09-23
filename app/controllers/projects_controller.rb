@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
     end
 
     def create
-        person = find_or_create_person()
+        person = find_or_create_organizer()
         @project = Project.new(project_params)
         @project.person = person
         if @project.save

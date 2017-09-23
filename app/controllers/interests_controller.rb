@@ -14,6 +14,7 @@ class InterestsController < ApplicationController
         @interest = Interest.new(interest_params)
         @interest.person = person
         if @interest.save
+            InterestMailer.new_interest_email(@interest).deliver_later
             redirect_to @interest.role
         else
             render :new

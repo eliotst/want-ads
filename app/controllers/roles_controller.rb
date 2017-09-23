@@ -39,14 +39,15 @@ class RolesController < ApplicationController
         assign_params = params.require(:role).permit(:person_id)
         # TOOD: error handling
         @role.update(assign_params)
+        RoleMailer.assign_mail(@role).deliver_later
         redirect_to @role
     end
 
     def unassign
         @role = Role.find(params[:id])
+        RoleMailer.unassign_mail(@role).deliver_later
         @role.person = nil
         @role.save
-        puts @role.errors.full_messages
         redirect_to @role
     end
 
