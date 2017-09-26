@@ -31,7 +31,11 @@
                                 <%= form.hidden_field :role_id, value: @interest.role.id %>
                             </p>
                         </div>
-                        <%= render "volunteer_form", :person => @interest.person %>
+                        <% if current_person == nil %>
+                            <%= render "volunteer_form", :person => @interest.person %>
+                        <% else %>
+                            <%= form.hidden_field :person_id, value: current_person.id %>
+                        <% end %>
                     </div>
                     <div class="center">
                         <button class="waves-effect waves-teal btn" type="submit">I am Interested</button>

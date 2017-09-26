@@ -5,9 +5,11 @@
                 <span class="card-title">
                     <%= @project.title %>
                 </span>
-                <a href="<%= edit_project_path(@project) %>" class="btn-floating halfway-fab waves-effect waves-light red">
-                    <i class="material-icons">edit</i>
-                </a>
+                <% if @project.has_permission(current_person) %>
+                    <a href="<%= edit_project_path(@project) %>" class="btn-floating halfway-fab waves-effect waves-light red">
+                        <i class="material-icons">edit</i>
+                    </a>
+                <% end %>
             </div>
             <div class="card-content">
                 <div class="row">

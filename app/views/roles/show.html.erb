@@ -11,7 +11,11 @@
             </div>
             <div class="card-action">
                 <% if @role.person == nil %>
-                    <%= link_to "I am Interested", new_interest_path(role_id: @role.id), class: "btn" %>
+                    <% if @role.is_interested(current_person) %>
+                        <%= button_to "I am No Longer Interested", interest_path(role_id: @role.id), method: :delete, class: "btn" %>
+                    <% else %>
+                        <%= link_to "I am Interested", new_interest_path(role_id: @role.id), class: "btn" %>
+                    <% end %>
                 <% else %>
                     <%= link_to "Unassign", unassign_role_path(@role), method: :patch, class: "btn" %>
                 <% end %>
@@ -35,7 +39,7 @@
         </div>
     </div>
     <div class="col s12">
-        <% if @role.person == nil %>
+        <% if @role.person == nil && @role.project.has_permission(current_person) %>
             <%= render 'role_interest' %>
         <% end %>
     </div>

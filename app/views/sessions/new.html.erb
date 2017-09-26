@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <%= form_tag sessions_path do %>
+                <div class="card-content">
+                        <div class="col s12">
+                            <p>
+                                <strong>Username:</strong>
+                                <span><%= text_field_tag :email, params[:email] %></span>
+                            </p>
+                            <p>
+                                <strong>Password:</strong>
+                                <span><%= password_field_tag :password %></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <button class="waves-effect waves-teal btn" type="submit">Login</button>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,19 +1,32 @@
 class ProjectsController < ApplicationController
+    helper_method :can_create_projects?
+
     def new
-        @project = Project.new()
-        3.times do
-            @project.roles.build
+        if can_create_projects?
+            @project = Project.new()
+            3.times do
+                @project.roles.build
+            end
+        else
+            flash.now.alert = "You cannot do that"
+            redirect_to :projects
         end
     end
 
     def create
-        person = find_or_create_organizer()
-        @project = Project.new(project_params)
-        @project.person = person
-        if @project.save
-            redirect_to @project
+        if can_create_projects
+            person = find_or_create_organizer()
+            @project = Project.new(project_params)
+            @project.person = person
+            if @project.save
+                redirect_to @project
+            else
+                flash.now.alert = "Unable to create project"
+                render :new, @project
+            end
         else
-            render :new, @project
+            flash.now.alert = "You cannot do that"
+            redirect_to :projects
         end
     end
 
@@ -27,34 +40,48 @@ class ProjectsController < ApplicationController
 
     def destroy
         @project = Project.find(params[:id])
-        @project.destroy
-
-        redirect_to projects_path
+        if @project != nil && @project.has_permission(current_person)
+            @project.destroy
+            redirect_to projects_path
+        else
+            redirect_to @project
+        end
     end
 
     def edit
         @project = Project.find(params[:id])
-        if @project
+        if @project != nil && @project.has_permission(current_person)
             row_left = @project.roles.length % 3
             fill_row = 3 - row_left
             fill_row.times do
                 @project.roles.build
             end
+        else
+            redirect_to @project
         end
     end
 
     def update
-        person = find_or_create_organizer()
         @project = Project.find(params[:id])
-        @project.person = person
-        if @project.update(project_params)
-            redirect_to @project
+        if @project != nil && @project.has_permission(current_person)
+            person = find_or_create_organizer()
+            @project.person = person
+            if @project.update(project_params)
+                redirect_to @project
+            else
+                render 'edit'
+            end
         else
-            render 'edit'
+            redirect_to projects_path
         end
     end
 
     private
+        def can_create_projects?
+            current_person != nil &&
+                (current_person.admin? || current_person.organizer?)
+        end
+
         def find_or_create_organizer()
             person_params = params.require(:organizer).permit(:first_name, :last_name, :email)
             if person_params[:id]

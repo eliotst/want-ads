@@ -10,9 +10,11 @@ class InterestsController < ApplicationController
     end
 
     def create
-        person = find_or_create_volunteer()
         @interest = Interest.new(interest_params)
-        @interest.person = person
+        if @interest.person_id == nil
+            person = find_or_create_volunteer()
+            @interest.person = person
+        end
         if @interest.save
             InterestMailer.new_interest_email(@interest).deliver_later
             redirect_to @interest.role
@@ -22,7 +24,11 @@ class InterestsController < ApplicationController
     end
 
     def destroy
-        @interest = Interest.find(params[:id])
+        if params[:role_id] == nil
+            @interest = Interest.find(params[:id])
+        else
+            @interest = Interest.find_by_role_id(params[:role_id])
+        end
         role = @interest.role
         @interest.destroy
 
@@ -49,7 +55,7 @@ class InterestsController < ApplicationController
         end
 
         def interest_params
-            params.require(:interest).permit(:role_id)
+            params.require(:interest).permit(:role_id, :person_id)
         end
 
         def role_from_params

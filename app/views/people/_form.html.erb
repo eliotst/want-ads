@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <%= form_for @person do |form| %>
+                <div class="card-content">
+                    <div class="row">
+                        <% if @person.errors.any? %>
+                            <div id="error_explanation">
+                                <h2>
+                                    <%= pluralize(@person.errors.count, "error") %> errors:
+                                </h2>
+                                <ul>
+                                    <% @person.errors.full_messages.each do |msg| %>
+                                        <li><%= msg %></li>
+                                    <% end %>
+                                </ul>
+                            </div>
+                        <% end %>
+                        <div class="col s12">
+                            <div class="input-field col s12">
+                                <%= form.label :first_name %>
+                                <%= form.text_field :first_name %>
+                            </div>
+                            <div class="input-field col s12">
+                                <%= form.label :last_name %>
+                                <%= form.text_field :last_name %>
+                            </div>
+                            <div class="input-field col s12">
+                                <%= form.label :email %>
+                                <%= form.text_field :email %>
+                            </div>
+                            <div class="input-field col s12">
+                                <%= form.select :user_type, Person.user_types.keys.to_a %>
+                                <%= form.label :user_type %>
+                            </div>
+                            <div class="input-field col s12">
+                                <%= form.label :password %>
+                                <%= form.password_field :password %>
+                            </div>
+                            <div class="input-field col s12">
+                                <%= form.label :password_confirmation %>
+                                <%= form.password_field :password_confirmation %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <button class="waves-effect waves-teal btn" type="submit">Save</button>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+
+
