@@ -1,0 +1,8 @@
+<%= form_for @message, html: { class: "flat" } do |form| %>
+  <div class="input-field col s12">
+      <%= message_form.label :message %>
+      <%= message_form.text_field :message %>
+  </div>
+  <%= button_to "Submit", @interest, class: "btn" %>
+<% end %>
+

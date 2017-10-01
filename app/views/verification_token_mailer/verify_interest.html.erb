@@ -1,0 +1,9 @@
+<p>
+  You have expressed interest in <%= @interest.role.title %>, but first you must verify your email address.
+</p>
+<p>
+  Please follow this link to verify your address:
+</p>
+<p>
+  <%= link_to verify_token_url(@verification_token.token, only_path:true), verify_token_url(@verification_token.token, only_path:true) %>
+</p>

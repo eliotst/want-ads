@@ -1,7 +1,7 @@
 class PeopleController < ApplicationController
   before_action do |controller|
     unless controller.send(:is_admin?)
-      redirect_to :home
+      redirect_to :projects
     end
   end
 

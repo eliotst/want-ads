@@ -1,0 +1,22 @@
+<% if conversation.messages.length > 0 %>
+  <% conversation.messages.each do |message| %>
+    <div class="col s12">
+      <p>
+        <strong>Person:</strong>
+        <%= message.person.full_name %>
+      </p>
+      <p>
+        <strong>Date:</strong>
+        <%= message.created_at %>
+      </p>
+      <p>
+        <%= message.message %>
+      </p>
+    </div>
+  <% end %>
+  <%= render 'message_form', message: @message %>
+<% else %>
+  <div class="col s12">
+    Nothing has been said.
+  </div>
+<% end %>

@@ -33,6 +33,10 @@ class Person < ApplicationRecord
         self.first_name + " " + self.last_name
     end
 
+    def has_password?
+        !self.password_hash.nil?
+    end
+
     def needs_password?
         self.password_hash.nil? && (self.admin? || self.organizer?)
     end

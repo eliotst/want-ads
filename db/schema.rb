@@ -10,18 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170924153706) do
+ActiveRecord::Schema.define(version: 20170928104706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "conversations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "interests", force: :cascade do |t|
     t.bigint "role_id"
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "verified"
+    t.bigint "verification_token_id"
+    t.bigint "conversation_id"
+    t.index ["conversation_id"], name: "index_interests_on_conversation_id"
     t.index ["person_id"], name: "index_interests_on_person_id"
     t.index ["role_id"], name: "index_interests_on_role_id"
+    t.index ["verification_token_id"], name: "index_interests_on_verification_token_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "conversation_id"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["person_id"], name: "index_messages_on_person_id"
   end
 
   create_table "people", force: :cascade do |t|
@@ -56,9 +76,23 @@ ActiveRecord::Schema.define(version: 20170924153706) do
     t.index ["project_id"], name: "index_roles_on_project_id"
   end
 
+  create_table "verification_tokens", force: :cascade do |t|
+    t.string "token"
+    t.bigint "person_id"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_verification_tokens_on_person_id"
+  end
+
+  add_foreign_key "interests", "conversations"
   add_foreign_key "interests", "people"
   add_foreign_key "interests", "roles"
+  add_foreign_key "interests", "verification_tokens"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "people"
   add_foreign_key "projects", "people"
   add_foreign_key "roles", "people"
   add_foreign_key "roles", "projects"
+  add_foreign_key "verification_tokens", "people"
 end

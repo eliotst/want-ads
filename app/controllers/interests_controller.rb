@@ -6,16 +6,33 @@ class InterestsController < ApplicationController
             redirect_to :projects
         end
         @interest = Interest.new
+        @message = Message.new
         @interest.role = role_from_params
     end
 
     def create
         @interest = Interest.new(interest_params)
-        if @interest.person_id == nil
+        @interest.verified = true
+        if @interest.person_id == nil # shouldn't pass person_id through form
             person = find_or_create_volunteer()
-            @interest.person = person
+            if person.volunteer?
+                @interest.person = person
+                @interest.verified = false
+            else
+                flash.now.alert = "You must be logged in to do that"
+                render :new
+                return
+            end
+            message = Message.new(message_params)
+            if message.message != ""
+                message.person = person
+                @interest.conversation.messages.push(message)
+            end
         end
         if @interest.save
+            if @interest.verified == false
+                VerificationTokenMailer.verify_interest(@interest).deliver_later
+            end
             InterestMailer.new_interest_email(@interest).deliver_later
             redirect_to @interest.role
         else
@@ -27,12 +44,19 @@ class InterestsController < ApplicationController
         if params[:role_id] == nil
             @interest = Interest.find(params[:id])
         else
-            @interest = Interest.find_by_role_id(params[:role_id])
+            @interest = Interest.find_by role_id: params[:role_id], person_id: params[:person_id]
         end
         role = @interest.role
         @interest.destroy
 
         redirect_to role
+    end
+
+    def show
+        @interest = Interest.find(params[:id])
+    end
+
+    def update
     end
 
     private
@@ -56,6 +80,10 @@ class InterestsController < ApplicationController
 
         def interest_params
             params.require(:interest).permit(:role_id, :person_id)
+        end
+
+        def message_params
+            params.require(:message).permit(:message)
         end
 
         def role_from_params

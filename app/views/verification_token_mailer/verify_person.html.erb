@@ -1,0 +1,6 @@
+<p>
+  Please follow this link to verify your address:
+</p>
+<p>
+  <%= link_to verify_token_url(@verification_token.token, only_path:true), verify_token_url(@verification_token.token, only_path:true) %>
+</p>
