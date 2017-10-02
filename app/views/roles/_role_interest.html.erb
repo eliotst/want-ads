@@ -7,7 +7,6 @@
                     <li class="collection-item full-width">
                         <%= link_to interest.person.full_name, interest %>
                         <%= form_for interest, url: assign_interest_path(interest), html: { class: "flat" }, method: :post do |form| %>
-                            <%= form.hidden_field :person_id, value: interest.person.id %>
                             <button class="btn-floating horizontal waves-effect waves-light red" type="submit">
                                 <i class="material-icons">add</i>
                             </button>

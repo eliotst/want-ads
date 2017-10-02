@@ -12,7 +12,7 @@
             <div class="card-action">
                 <% if @role.needs_people? %>
                     <% if @role.is_interested(current_person) %>
-                        <%= button_to "I am No Longer Interested", interest_path(role_id: @role.id, person_id: current_person.id), method: :delete, class: "btn" %>
+                        <%= button_to "I am No Longer Interested", interest_path(@role.find_interest(current_person)[0]), method: :delete, class: "btn" %>
                     <% else %>
                         <%= link_to "I am Interested", new_interest_path(role_id: @role.id), class: "btn" %>
                     <% end %>
@@ -34,7 +34,7 @@
     </div>
     <div class="col s12">
         <% if @role.project.has_permission(current_person) %>
-            <%= render 'role_volunteers', people: @role.people, role: @role %>
+            <%= render 'role_people', person_roles: @role.person_roles, role: @role %>
         <% end %>
     </div>
     <div class="col s12">

@@ -3,12 +3,13 @@
         <span class="card-title">Volunteers</span>
         <ul class="collection with-header">
           <li class="collection-header">
-            <%= people.length %> out of <%= role.number_of_people %> assigned.
+            <%= person_roles.length %> out of <%= role.number_of_people %> assigned.
           </li>
-          <% if people.length > 0 %>
-            <% people.each do |person| %>
+          <% if person_roles.length > 0 %>
+            <% person_roles.each do |person_role| %>
               <li class="collection-item full-width">
-                <span><%= person.full_name %></span>
+                <span><%= person_role.person.full_name %></span>
+                <%= button_to "Delete", person_role, method: :delete, class: "btn" %>
               </li>
             <% end %>
           <% end %>

@@ -35,8 +35,6 @@
                         </div>
                         <% if current_person == nil %>
                             <%= render "volunteer_form", :person => @interest.person %>
-                        <% else %>
-                            <%= form.hidden_field :person_id, value: current_person.id %>
                         <% end %>
                         <%= fields_for @message, html: { class: "flat" } do |message_fields| %>
                             <div class="input-field col s12">

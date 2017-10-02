@@ -2,8 +2,8 @@ class Role < ApplicationRecord
   belongs_to :conversation
   belongs_to :project
   has_many :interests
-  has_many :person_role
-  has_many :people, through: :person_role
+  has_many :person_roles
+  has_many :people, through: :person_roles
 
   after_initialize :initialize_conversation
 
@@ -14,7 +14,11 @@ class Role < ApplicationRecord
   end
 
   def is_interested(person)
-    self.interests.any? {|interest| interest.person == person}
+    self.find_interest(person).length > 0
+  end
+
+  def find_interest(person)
+    self.interests.where(person: person)
   end
 
   def needs_people?

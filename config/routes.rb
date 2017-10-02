@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
   resources :messages
   resources :people
+  resources :person_roles
   resources :projects
   resources :roles
   resources :sessions

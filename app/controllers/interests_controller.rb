@@ -13,21 +13,23 @@ class InterestsController < ApplicationController
     def create
         @interest = Interest.new(interest_params)
         @interest.verified = true
-        if @interest.person_id == nil # shouldn't pass person_id through form
+        if current_person != nil
+            person = current_person
+        else
             person = find_or_create_volunteer()
             if person.volunteer?
-                @interest.person = person
                 @interest.verified = false
             else
                 flash.now.alert = "You must be logged in to do that"
                 render :new
                 return
             end
-            message = Message.new(message_params)
-            if message.message != ""
-                message.person = person
-                @interest.conversation.messages.push(message)
-            end
+        end
+        @interest.person = person
+        message = Message.new(message_params)
+        if message.message != ""
+            message.person = person
+            @interest.conversation.messages.push(message)
         end
         if @interest.save
             if @interest.verified == false
@@ -41,11 +43,7 @@ class InterestsController < ApplicationController
     end
 
     def destroy
-        if params[:role_id] == nil
-            @interest = Interest.find(params[:id])
-        else
-            @interest = Interest.find_by role_id: params[:role_id], person_id: params[:person_id]
-        end
+        @interest = Interest.find(params[:id])
         role = @interest.role
         @interest.destroy
 
@@ -64,7 +62,6 @@ class InterestsController < ApplicationController
         role = @interest.role
         if role.can_assign(current_person)
             role.people << @interest.person
-            @interest.destroy
             role.save
             RoleMailer.assign_mail(role).deliver_later
             redirect_to role
@@ -93,7 +90,7 @@ class InterestsController < ApplicationController
         end
 
         def interest_params
-            params.require(:interest).permit(:role_id, :person_id)
+            params.require(:interest).permit(:role_id)
         end
 
         def message_params
