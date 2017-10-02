@@ -59,6 +59,20 @@ class InterestsController < ApplicationController
     def update
     end
 
+    def assign
+        @interest = Interest.find(params[:id])
+        role = @interest.role
+        if role.can_assign(current_person)
+            role.people << @interest.person
+            @interest.destroy
+            role.save
+            RoleMailer.assign_mail(role).deliver_later
+            redirect_to role
+        else
+            redirect_to :projects
+        end
+    end
+
     private
         def find_or_create_volunteer()
             person_params = params.require(:volunteer).permit(:first_name, :last_name, :email)

@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-content">
+        <span class="card-title">Volunteers</span>
+        <ul class="collection with-header">
+          <li class="collection-header">
+            <%= people.length %> out of <%= role.number_of_people %> assigned.
+          </li>
+          <% if people.length > 0 %>
+            <% people.each do |person| %>
+              <li class="collection-item full-width">
+                <span><%= person.full_name %></span>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+    </div>
+</div>
+

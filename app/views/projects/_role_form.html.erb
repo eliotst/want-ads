@@ -6,6 +6,10 @@
     <%= form.label :description %>
     <%= form.text_area :description, :class => "materialize-textarea" %>
 </div>
+<div class="input-field col s12">
+    <%= form.label :number_of_people %>
+    <%= form.text_area :number_of_people %>
+</div>
 <% if role.id %>
     <div class="col s12">
         <%= form.check_box :_destroy %>

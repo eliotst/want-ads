@@ -5,11 +5,12 @@
                 <span class="card-title">
                   <%= @interest.role.title %> - <%= @interest.person.full_name %>
                 </span>
-                <%= form_for @interest, method: :delete do |form| %>
-                    <%= form.hidden_field :id, value: @interest.id %>
-                    <button class="btn-floating horizontal waves-effect waves-light red" type="submit">
-                        <i class="material-icons">cancel</i>
-                    </button>
+            </div>
+            <div class="card-action">
+                <% if current_person == @interest.person %>
+                    <%= button_to "I am No Longer Interested", interest_path(@interest), method: :delete, class: "btn" %>
+                <% elsif current_person == @interest.role.project.person %>
+                    <%= button_to "Assign", assign_interest_path(@interest), method: :post, class: "btn" %>
                 <% end %>
             </div>
             <div class="card-content">

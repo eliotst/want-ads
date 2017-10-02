@@ -1,6 +1,7 @@
 <% if conversation.messages.length > 0 %>
+  <ul class="collection">
   <% conversation.messages.each do |message| %>
-    <div class="col s12">
+    <li class="collection-item">
       <p>
         <strong>Person:</strong>
         <%= message.person.full_name %>
@@ -12,9 +13,14 @@
       <p>
         <%= message.message %>
       </p>
-    </div>
+    </li>
   <% end %>
-  <%= render 'message_form', message: @message %>
+  <% if current_person != nil %>
+    <li class="collection-item">
+      <%= render 'message_form', message: conversation.messages.new %>
+    </li>
+  <% end %>
+  </ul>
 <% else %>
   <div class="col s12">
     Nothing has been said.

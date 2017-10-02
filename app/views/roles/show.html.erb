@@ -10,14 +10,12 @@
                 </a>
             </div>
             <div class="card-action">
-                <% if @role.person == nil %>
+                <% if @role.needs_people? %>
                     <% if @role.is_interested(current_person) %>
-                        <%= button_to "I am No Longer Interested", interest_path(role_id: @role.id, person_id: @role.person.id), method: :delete, class: "btn" %>
+                        <%= button_to "I am No Longer Interested", interest_path(role_id: @role.id, person_id: current_person.id), method: :delete, class: "btn" %>
                     <% else %>
                         <%= link_to "I am Interested", new_interest_path(role_id: @role.id), class: "btn" %>
                     <% end %>
-                <% else %>
-                    <%= link_to "Unassign", unassign_role_path(@role), method: :patch, class: "btn" %>
                 <% end %>
             </div>
             <div class="card-content">
@@ -25,10 +23,6 @@
                     <div class="col s12">
                         <div class="role-project">
                             <%= link_to @role.project.title, @role.project %>
-                        </div>
-                        <div class="role-volunteer">
-                            <strong>Assigned Volunteer:</strong>
-                            <%= @role.try(:person).try(:full_name) || "No One" %>
                         </div>
                         <p>
                             <%= @role.description %>
@@ -39,8 +33,18 @@
         </div>
     </div>
     <div class="col s12">
-        <% if @role.person == nil && @role.project.has_permission(current_person) %>
+        <% if @role.project.has_permission(current_person) %>
+            <%= render 'role_volunteers', people: @role.people, role: @role %>
+        <% end %>
+    </div>
+    <div class="col s12">
+        <% if @role.needs_people? && @role.project.has_permission(current_person) %>
             <%= render 'role_interest', interests: @role.interests.where(verified: true), role: @role %>
+        <% end %>
+    </div>
+    <div class="col s12">
+        <% if @role.can_discuss(current_person) %>
+            <%= render 'role_conversation', conversation: @role.conversation %>
         <% end %>
     </div>
 </div>

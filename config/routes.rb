@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'person_roles/destroy'
+
   get 'messages/create'
 
   get "/logout" => "sessions#destroy", :as => "logout"
@@ -6,15 +8,15 @@ Rails.application.routes.draw do
   get "/verify_token/:token" => "verification_tokens#verify", :as => "verify_token"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :interests
-  resources :people
-  resources :projects
-  resources :roles do
+  resources :interests do
     member do
-      patch :assign
-      patch :unassign
+      post :assign
     end
   end
+  resources :messages
+  resources :people
+  resources :projects
+  resources :roles
   resources :sessions
   resources :verification_tokens
 

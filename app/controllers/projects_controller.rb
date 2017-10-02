@@ -14,10 +14,9 @@ class ProjectsController < ApplicationController
     end
 
     def create
-        if can_create_projects
-            person = find_or_create_organizer()
+        if can_create_projects?
             @project = Project.new(project_params)
-            @project.person = person
+            @project.person = current_person
             if @project.save
                 redirect_to @project
             else
@@ -64,8 +63,7 @@ class ProjectsController < ApplicationController
     def update
         @project = Project.find(params[:id])
         if @project != nil && @project.has_permission(current_person)
-            person = find_or_create_organizer()
-            @project.person = person
+            @project.person = current_person
             if @project.update(project_params)
                 redirect_to @project
             else
@@ -80,24 +78,6 @@ class ProjectsController < ApplicationController
         def can_create_projects?
             current_person != nil &&
                 (current_person.admin? || current_person.organizer?)
-        end
-
-        def find_or_create_organizer()
-            person_params = params.require(:organizer).permit(:first_name, :last_name, :email)
-            if person_params[:id]
-                person = Person.find(person_params[:id])
-            else
-                person = Person.find_by email: person_params[:email]
-            end
-
-            if person == nil
-                person = Person.new(person_params)
-                person.save
-            else
-                person.update(person_params)
-            end
-
-            person
         end
 
         def project_params

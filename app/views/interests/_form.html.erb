@@ -38,7 +38,12 @@
                         <% else %>
                             <%= form.hidden_field :person_id, value: current_person.id %>
                         <% end %>
-                        <%= render 'message_form', message: @message %>
+                        <%= fields_for @message, html: { class: "flat" } do |message_fields| %>
+                            <div class="input-field col s12">
+                                <%= message_fields.text_area :message, class: "materialize-textarea" %>
+                                <%= message_fields.label :message %>
+                            </div>
+                        <% end %>
                     </div>
                     <div class="center">
                         <button class="waves-effect waves-teal btn" type="submit">I am Interested</button>

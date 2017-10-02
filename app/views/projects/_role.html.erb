@@ -12,7 +12,7 @@
         </div>
         <div class="card-action">
             <%= link_to "Details", role_path(role), class: "btn" %>
-            <% if role.person == nil %>
+            <% if role.needs_people? %>
                 <% if role.is_interested(current_person) %>
                     <%= button_to "Not Interested", interest_path(role_id: role.id), method: :delete, class: "btn" %>
                 <% else %>
@@ -22,11 +22,7 @@
         </div>
         <div class="card-content">
             <div class="volunteer">
-            <% if role.person != nil %>
-                <%= role.person.full_name %>
-            <% else %>
-                No Volunteer Assigned
-            <% end %>
+                <%= role.people.length %> out of <%= role.number_of_people%> assigned
             </div>
             <div class="description">
                 <%= role.description %>
