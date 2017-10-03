@@ -5,6 +5,8 @@ class Role < ApplicationRecord
   has_many :person_roles
   has_many :people, through: :person_roles
 
+  enum role_type: [:volunteer, :organizer]
+
   after_initialize :initialize_conversation
 
   def initialize_conversation
@@ -30,6 +32,10 @@ class Role < ApplicationRecord
   end
 
   def can_assign(person)
-    (person == self.project.person || person.admin?) && self.needs_people?
+    (person == self.project.person || role.is_project_organizer?(person) || person.admin?) && self.needs_people?
+  end
+
+  def is_project_organizer?(person)
+    self.person_roles.where(person: person, role_type: Role.role_type.organizer).length > 0
   end
 end

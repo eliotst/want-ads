@@ -1,14 +1,18 @@
 <div class="input-field col s12">
     <%= form.label :title %>
-    <%= form.text_field :title, :class => "materialize-textarea" %>
+    <%= form.text_field :title %>
 </div>
 <div class="input-field col s12">
     <%= form.label :description %>
     <%= form.text_area :description, :class => "materialize-textarea" %>
 </div>
 <div class="input-field col s12">
+    <%= form.select(:role_type, Role.role_types.keys.to_a) %>
+    <%= form.label :role_type %>
+</div>
+<div class="input-field col s12">
     <%= form.label :number_of_people %>
-    <%= form.text_area :number_of_people %>
+    <%= form.text_field :number_of_people %>
 </div>
 <% if role.id %>
     <div class="col s12">

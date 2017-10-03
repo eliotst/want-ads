@@ -9,7 +9,7 @@
             <% person_roles.each do |person_role| %>
               <li class="collection-item full-width">
                 <span><%= person_role.person.full_name %></span>
-                <%= button_to "Delete", person_role, method: :delete, class: "btn" %>
+                <%= button_to "Unassign", person_role, method: :delete, class: "btn" %>
               </li>
             <% end %>
           <% end %>

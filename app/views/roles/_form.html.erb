@@ -25,6 +25,10 @@
                             <%= form.label :description %>
                             <%= form.text_area :description, :class => "materialize-textarea" %>
                         </div>
+                        <div class="input-field col s12">
+                            <%= form.select(:role_type, Role.role_types.keys.to_a) %>
+                            <%= form.label :role_type %>
+                        </div>
                     </div>
                     <div class="center">
                         <button class="waves-effect waves-teal btn" type="submit">Save</button>

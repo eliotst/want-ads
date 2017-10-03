@@ -4,7 +4,12 @@ class ProjectsController < ApplicationController
     def new
         if can_create_projects?
             @project = Project.new()
-            3.times do
+            organizer = @project.roles.build(
+                title: "Organizer",
+                role_type: Role.organizer,
+                number_of_people: 1,
+            )
+            5.times do
                 @project.roles.build
             end
         else
@@ -82,6 +87,6 @@ class ProjectsController < ApplicationController
 
         def project_params
             params.require(:project).permit(:title, :description, :state,
-                roles_attributes: [:id, :title, :description, :_destroy])
+                roles_attributes: [:id, :title, :description, :number_of_people, :role_type, :_destroy])
         end
 end

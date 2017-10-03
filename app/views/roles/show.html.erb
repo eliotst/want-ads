@@ -4,6 +4,7 @@
             <div class="card-image empty">
                 <div class="card-title">
                     <%= @role.title %>
+                    <h6><%= @role.role_type.upcase %></h6>
                 </div>
                 <a href="<%= edit_role_path(@role) %>" class="btn-floating halfway-fab waves-effect waves-light red">
                     <i class="material-icons">edit</i>
@@ -12,9 +13,12 @@
             <div class="card-action">
                 <% if @role.needs_people? %>
                     <% if @role.is_interested(current_person) %>
-                        <%= button_to "I am No Longer Interested", interest_path(@role.find_interest(current_person)[0]), method: :delete, class: "btn" %>
+                        <%= button_to "Not Interested", interest_path(@role.find_interest(current_person)[0]), method: :delete, class: "btn" %>
                     <% else %>
                         <%= link_to "I am Interested", new_interest_path(role_id: @role.id), class: "btn" %>
+                    <% end %>
+                    <% if @role.can_assign(current_person) %>
+                        <%= link_to "Assign", new_person_role_path(role_id: @role.id), class: "btn" %>
                     <% end %>
                 <% end %>
             </div>
