@@ -6,7 +6,8 @@ class ProjectsController < ApplicationController
             @project = Project.new()
             organizer = @project.roles.build(
                 title: "Organizer",
-                role_type: Role.organizer,
+                description: "Primary organizer for the project.",
+                role_type: "organizer",
                 number_of_people: 1,
             )
             5.times do

@@ -11,6 +11,12 @@
                     </a>
                 <% end %>
             </div>
+            <div class="card-action">
+                <% if @project.has_permission(current_person) %>
+                    <%= link_to "Add Task", new_task_path(project_id: @project.id), class: "btn" %>
+                    </a>
+                <% end %>
+            </div>
             <div class="card-content">
                 <div class="row">
                     <div class="col s12">
@@ -25,4 +31,7 @@
     <% @project.roles.each do |role| %>
         <%= render "role", :role => role %>
     <% end %>
+</div>
+<div class="row">
+    <%= render "tasks", :tasks => @project.tasks %>
 </div>

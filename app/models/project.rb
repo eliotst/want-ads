@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
     belongs_to :person
     has_many :roles
+    has_many :tasks
 
     accepts_nested_attributes_for :roles,
         allow_destroy: true,

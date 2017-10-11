@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171002104936) do
+ActiveRecord::Schema.define(version: 20171005105532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,24 @@ ActiveRecord::Schema.define(version: 20171002104936) do
     t.index ["project_id"], name: "index_roles_on_project_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "status"
+    t.bigint "project_id"
+    t.bigint "person_id"
+    t.bigint "role_id"
+    t.bigint "conversation_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_tasks_on_conversation_id"
+    t.index ["person_id"], name: "index_tasks_on_person_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.index ["role_id"], name: "index_tasks_on_role_id"
+  end
+
   create_table "verification_tokens", force: :cascade do |t|
     t.string "token"
     t.bigint "person_id"
@@ -107,5 +125,9 @@ ActiveRecord::Schema.define(version: 20171002104936) do
   add_foreign_key "projects", "people"
   add_foreign_key "roles", "conversations"
   add_foreign_key "roles", "projects"
+  add_foreign_key "tasks", "conversations"
+  add_foreign_key "tasks", "people"
+  add_foreign_key "tasks", "projects"
+  add_foreign_key "tasks", "roles"
   add_foreign_key "verification_tokens", "people"
 end
