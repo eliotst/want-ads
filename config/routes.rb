@@ -19,7 +19,13 @@ Rails.application.routes.draw do
   resources :projects
   resources :roles
   resources :sessions
-  resources :tasks
+  resources :tasks do
+    member do
+      post :complete
+      post :uncomplete
+      post :volunteer
+    end
+  end
   resources :verification_tokens
 
   root 'roles#index'

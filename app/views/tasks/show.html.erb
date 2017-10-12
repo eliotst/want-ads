@@ -10,7 +10,17 @@
                 </a>
             </div>
             <div class="card-action">
-              <span class="btn">Assign</span>
+                <% if @task.has_permission?(current_person) %>
+                    <%= button_to "Delete Task", task_path(@task), class: "btn", method: :delete %>
+                <% end %>
+                <% if @task.is_eligible?(current_person) %>
+                    <%= button_to "Volunteer", volunteer_task_path(@task), class: "btn" %>
+                <% end %>
+                <% if @task.incomplete? %>
+                    <%= button_to "Mark Complete", complete_task_path(@task), class: "btn" %>
+                <% else %>
+                    <%= button_to "Mark Incomplete", uncomplete_task_path(@task), class: "btn" %>
+                <% end %>
             </div>
             <div class="card-content">
                 <div class="row">
@@ -41,5 +51,13 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col s12">
+        <%= render "tasks", project: @task.project, tasks: @task.subtasks, parent: @task %>
+    </div>
+    <div class="col s12">
+        <% if @task.can_discuss?(current_person) %>
+            <%= render 'task_conversation', conversation: @task.conversation %>
+        <% end %>
     </div>
 </div>

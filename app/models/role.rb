@@ -38,4 +38,8 @@ class Role < ApplicationRecord
   def is_project_organizer?(person)
     self.person_roles.where(person: person, role_type: Role.role_type.organizer).length > 0
   end
+
+  def is_assigned_to?(person)
+    self.person_roles.where(person: person).length > 0
+  end
 end

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-content">
-        <span class="card-title">Tasks</span>
+        <span class="card-title">Sub-Tasks</span>
         <ul class="collection with-header">
           <% if tasks.length > 0 %>
             <% tasks.each do |task| %>
@@ -10,7 +10,7 @@
             <% end %>
           <% end %>
           <li class="collection-item full-width">
-            <%= link_to "Add a Task", new_task_path(project_id: project.id) %>
+            <%= link_to "Add a Task", new_task_path(project_id: project.id, parent_id: parent.try(:id)) %>
           </li>
         </ul>
     </div>

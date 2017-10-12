@@ -33,5 +33,5 @@
     <% end %>
 </div>
 <div class="row">
-    <%= render "tasks", :tasks => @project.tasks %>
+    <%= render "tasks", project: @project, tasks: @project.tasks.where(parent_id: nil) %>
 </div>

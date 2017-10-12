@@ -12,4 +12,8 @@ class Project < ApplicationRecord
     def has_permission(person)
         person != nil && (person.admin? || person == self.person)
     end
+
+    def has_role?(person)
+        self.roles.joins(:person_roles).where("person_roles.person_id": person.id)
+    end
 end

@@ -22,9 +22,22 @@
                   <%= form.hidden_field :project_id %>
                   <div><%= @task.project.title %></div>
               </div>
+              <div class="col s12">
+                  <%= form.label :parent %>
+                  <%= form.hidden_field :parent_id %>
+                  <div><%= @task.parent.title %></div>
+              </div>
               <div class="input-field col s12">
                   <%= form.label :title %>
                   <%= form.text_field :title %>
+              </div>
+              <div class="input-field col s12">
+                <%= form.select :role_id, @roles.collect {|role| [ role.title, role.id ]} %>
+                <%= form.label :role %>
+              </div>
+              <div class="input-field col s12">
+                <%= form.select :person_id, @people.collect {|person| [ person.full_name, person.id ]}, include_blank: "No One" %>
+                <%= form.label :person %>
               </div>
               <div class="input-field col s12">
                   <%= form.label :description %>

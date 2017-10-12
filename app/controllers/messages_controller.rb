@@ -21,6 +21,8 @@ class MessagesController < ApplicationController
     def redirect_back(conversation)
       if conversation.interest
         redirect_to conversation.interest
+      elsif conversation.task
+        redirect_to conversation.task
       elsif conversation.role
         redirect_to conversation.role
       else

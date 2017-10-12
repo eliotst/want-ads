@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005105532) do
+ActiveRecord::Schema.define(version: 20171012103819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,7 +99,9 @@ ActiveRecord::Schema.define(version: 20171005105532) do
     t.datetime "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "parent_id"
     t.index ["conversation_id"], name: "index_tasks_on_conversation_id"
+    t.index ["parent_id"], name: "index_tasks_on_parent_id"
     t.index ["person_id"], name: "index_tasks_on_person_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["role_id"], name: "index_tasks_on_role_id"
@@ -129,5 +131,6 @@ ActiveRecord::Schema.define(version: 20171005105532) do
   add_foreign_key "tasks", "people"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "roles"
+  add_foreign_key "tasks", "tasks", column: "parent_id"
   add_foreign_key "verification_tokens", "people"
 end
