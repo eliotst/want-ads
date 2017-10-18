@@ -1,0 +1,15 @@
+<li class="collection-item full-width task-item">
+  <div class="left-side">
+    <div class="title">
+      <%= link_to task.title, task %>
+    </div>
+    <div class="assignee">
+      Assigned To: <%= task.person.try(:full_name) || task.role.try(:title) || "No One" %>
+    </div>
+  </div>
+  <div class="right-side">
+    <div class="due-date">
+      <%= task.end_date || "No Due Date" %>
+    </div>
+  </div>
+</li>

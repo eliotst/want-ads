@@ -1,0 +1,11 @@
+<%= form_for message, html: { class: "flat" } do |form| %>
+  <div class="input-field col s12">
+      <%= form.text_area :message, class: "materialize-textarea" %>
+      <%= form.label :message %>
+  </div>
+  <div class="center">
+      <%= form.hidden_field :conversation_id, value: message.conversation_id %>
+      <button class="waves-effect waves-teal btn" type="submit">Submit</button>
+  </div>
+<% end %>
+

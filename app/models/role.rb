@@ -24,7 +24,7 @@ class Role < ApplicationRecord
   end
 
   def needs_people?
-    self.number_of_people > self.people.length
+    self.number_of_people == nil || self.number_of_people > self.people.length
   end
 
   def can_discuss(person)

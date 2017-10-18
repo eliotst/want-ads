@@ -1,17 +1,13 @@
-<div class="card">
-    <div class="card-content">
-        <span class="card-title">Tasks</span>
-        <ul class="collection with-header">
-          <% if tasks.length > 0 %>
-            <% tasks.each do |task| %>
-              <li class="collection-item full-width">
-                <%= link_to task.title, task %>
-              </li>
-            <% end %>
-          <% end %>
-          <li class="collection-item full-width">
-            <%= link_to "Add a Task", new_task_path(project_id: project.id) %>
-          </li>
-        </ul>
-    </div>
-</div>
+<ul class="collection with-header">
+  <li class="collection-header">
+    Tasks
+  </li>
+  <% if tasks.length > 0 %>
+    <% tasks.each do |task| %>
+      <%= render 'components/task-item', task: task %>
+    <% end %>
+  <% end %>
+  <li class="collection-item full-width">
+    <%= link_to "Add a Task", new_task_path(project_id: project.id) %>
+  </li>
+</ul>

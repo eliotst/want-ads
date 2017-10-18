@@ -23,6 +23,8 @@ class MessagesController < ApplicationController
         redirect_to conversation.interest
       elsif conversation.task
         redirect_to conversation.task
+      elsif conversation.project
+        redirect_to conversation.project
       elsif conversation.role
         redirect_to conversation.role
       else

@@ -4,9 +4,7 @@
         <ul class="collection with-header">
           <% if tasks.length > 0 %>
             <% tasks.each do |task| %>
-              <li class="collection-item full-width">
-                <%= link_to task.title, task %>
-              </li>
+              <%= render "components/task-item", task: task %>
             <% end %>
           <% end %>
           <li class="collection-item full-width">

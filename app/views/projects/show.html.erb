@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col s12">
+    <div class="col s8">
         <div class="card">
             <div class="card-image empty">
                 <span class="card-title">
@@ -23,15 +23,18 @@
                         <%= render 'details', project: @project %>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col s12">
+                        <%= render "tasks", project: @project, tasks: @project.tasks.where(parent_id: nil) %>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <% @project.roles.each do |role| %>
-        <%= render "role", :role => role %>
-    <% end %>
-</div>
-<div class="row">
-    <%= render "tasks", project: @project, tasks: @project.tasks.where(parent_id: nil) %>
+    <%= render "roles", roles: @project.roles %>
+    <div class="col s12">
+        <% if @project.can_discuss?(current_person) %>
+            <%= render 'project_conversation', conversation: @project.conversation %>
+        <% end %>
+    </div>
 </div>

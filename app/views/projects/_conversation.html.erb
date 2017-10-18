@@ -1,0 +1,24 @@
+<ul class="collection">
+  <% if conversation.messages.length > 0 %>
+    <% conversation.messages.each do |message| %>
+      <li class="collection-item">
+        <p>
+          <strong>Person:</strong>
+          <%= message.person.full_name %>
+        </p>
+        <p>
+          <strong>Date:</strong>
+          <%= message.created_at %>
+        </p>
+        <p>
+          <%= message.message %>
+        </p>
+      </li>
+    <% end %>
+  <% end %>
+  <% if current_person != nil %>
+    <li class="collection-item">
+      <%= render 'message_form', message: conversation.messages.new %>
+    </li>
+  <% end %>
+</ul>

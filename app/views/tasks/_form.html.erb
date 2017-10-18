@@ -22,11 +22,13 @@
                   <%= form.hidden_field :project_id %>
                   <div><%= @task.project.title %></div>
               </div>
-              <div class="col s12">
-                  <%= form.label :parent %>
-                  <%= form.hidden_field :parent_id %>
-                  <div><%= @task.parent.title %></div>
-              </div>
+              <% if @task.parent != nil %>
+                <div class="col s12">
+                    <%= form.label :parent %>
+                    <%= form.hidden_field :parent_id %>
+                    <div><%= @task.parent.title %></div>
+                </div>
+              <% end %>
               <div class="input-field col s12">
                   <%= form.label :title %>
                   <%= form.text_field :title %>
