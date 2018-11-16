@@ -40,7 +40,13 @@ class ProjectsController < ApplicationController
     end
 
     def index
-        @projects = Project.all()
+        if params[:mine]
+            @projects = Project.where(person: current_person)
+        elsif params[:all] and current_person and current_person.admin?
+            @projects = Project.all()
+        else
+            @projects = Project.where(state: Project.states[:active])
+        end
     end
 
     def destroy

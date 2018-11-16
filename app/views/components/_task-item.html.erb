@@ -1,13 +1,23 @@
-<li class="collection-item full-width task-item">
-  <div class="left-side">
+<li class="collection-item full-width task-item row">
+  <div class="left-side col s8">
+    <div class="checkbox">
+      <%= task_checkbox(task) %>
+    </div>
     <div class="title">
       <%= link_to task.title, task %>
     </div>
     <div class="assignee">
-      Assigned To: <%= task.person.try(:full_name) || task.role.try(:title) || "No One" %>
+      <% if task.person != nil %>
+        Assigned To: <%= task.person.full_name %>
+      <% elsif task.role != nil %>
+        Assigned To: <%= task.role.title %>
+        <%= form_for task, class: "flat", remote: true do |form| %>
+          <%= form.select(:person, task.possible_people.collect {|person| [ person.full_name, person.id ]}, include_blank: "No One", onchange: "alert('hello');") %>
+        <% end %>
+      <% end %>
     </div>
   </div>
-  <div class="right-side">
+  <div class="right-side col s4">
     <div class="due-date">
       <%= task.end_date || "No Due Date" %>
     </div>

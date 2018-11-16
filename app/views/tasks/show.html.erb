@@ -1,8 +1,9 @@
 <div class="row">
-    <div class="col s12">
+    <div class="col s12 m8">
         <div class="card">
             <div class="card-image empty">
                 <div class="card-title">
+                    <%= task_checkbox(@task) %>
                     <%= @task.title %>
                 </div>
                 <a href="<%= edit_task_path(@task) %>" class="btn-floating halfway-fab waves-effect waves-light red">
@@ -13,9 +14,6 @@
                 <% if @task.has_permission?(current_person) %>
                     <%= button_to "Delete Task", task_path(@task), class: "btn", method: :delete %>
                 <% end %>
-                <% if @task.is_eligible?(current_person) %>
-                    <%= button_to "Volunteer", volunteer_task_path(@task), class: "btn" %>
-                <% end %>
                 <% if @task.incomplete? %>
                     <%= button_to "Mark Complete", complete_task_path(@task), class: "btn" %>
                 <% else %>
@@ -25,37 +23,45 @@
             <div class="card-content">
                 <div class="row">
                     <div class="col s12">
-                        <div class="task-project">
-                            <%= link_to @task.project.title, @task.project %>
+                        <div class="row">
+                            <div class="task-project col s12">
+                                <%= link_to @task.project.title, @task.project %>
+                            </div>
+                            <div class="col s12">
+                                <strong>Status:</strong>
+                                <%= @task.status %>
+                            </div>
                         </div>
-                        <p>
-                          <strong>Assigned To:</strong>
-                          <%= @task.assignee_name %>
-                        </p>
-                        <p>
-                          <strong>Status:</strong>
-                          <%= @task.status %>
-                        </p>
-                        <p>
-                          <strong>Start:</strong>
-                          <%= @task.start_date %>
-                        </p>
-                        <p>
-                          <strong>End:</strong>
-                          <%= @task.end_date %>
-                        </p>
-                        <p>
-                            <%= @task.description %>
-                        </p>
+                        <div class="row">
+                            <div class="col s12 m6">
+                            <strong>Start:</strong>
+                            <%= @task.start_date %>
+                            </div>
+                            <div class="col s12 m6">
+                            <strong>End:</strong>
+                            <%= @task.end_date %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <strong>Description:</strong>
+                                <p class="description">
+                                    <%= @task.description %>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col s12">
+    <div class="col s12 m4">
+        <%= render "assignee", tasks: @task.subtasks %>
+    </div>
+    <div class="col s12 m8">
         <%= render "tasks", project: @task.project, tasks: @task.subtasks, parent: @task %>
     </div>
-    <div class="col s12">
+    <div class="col s12 m8">
         <% if @task.can_discuss?(current_person) %>
             <%= render 'task_conversation', conversation: @task.conversation %>
         <% end %>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post :assign
     end
   end
+  resources :home
   resources :messages
   resources :people
   resources :person_roles
@@ -24,9 +25,10 @@ Rails.application.routes.draw do
       post :complete
       post :uncomplete
       post :volunteer
+      post :unassign
     end
   end
   resources :verification_tokens
 
-  root 'roles#index'
+  root 'home#index'
 end

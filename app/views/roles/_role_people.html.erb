@@ -1,13 +1,7 @@
 <div class="card">
     <div class="card-content">
-        <span class="card-title">Volunteers</span>
+        <span class="card-title">Volunteer(s)</span>
         <ul class="collection with-header">
-          <li class="collection-header">
-            <%= role.people.length %>
-            <% if role.number_of_people != nil %>
-                out of <%= role.number_of_people%>
-            <% end %> people assigned
-          </li>
           <% if person_roles.length > 0 %>
             <% person_roles.each do |person_role| %>
               <li class="collection-item full-width">
@@ -15,6 +9,18 @@
                 <%= button_to "Unassign", person_role, method: :delete, class: "btn" %>
               </li>
             <% end %>
+          <% else %>
+            <li class="collection-item full-width">
+              No one has been assigned to this role
+            </li>
+          <% end %>
+          <% if role.people.length > 1 %>
+            <li class="collection-header">
+              <%= role.people.length %>
+              <% if role.number_of_people != nil %>
+                  out of <%= role.number_of_people%>
+              <% end %> people assigned
+            </li>
           <% end %>
         </ul>
     </div>

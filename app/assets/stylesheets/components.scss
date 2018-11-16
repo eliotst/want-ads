@@ -1,12 +1,40 @@
-.task-item {
+.task-checkbox-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+
+  &:focus {
+    background: none;
+  }
+
+  i {
+    font-size: 30px;
+  }
+}
+
+.collection-item.full-width.task-item {
+  padding-left: 10px !important;
+
   & > div {
     display: inline-block;
-    width: 49%;
   }
 
   .left-side {
+    .checkbox {
+      float: left;
+      z-index: 20;
+      padding-right: 5px;
+    }
+
     .title {
       font-size: 1.2rem;
+
+      a {
+        margin-left: 0;
+        padding-left: 0;
+      }
     }
 
     .assignee {
@@ -15,6 +43,7 @@
   }
 
   .right-side {
+    display: inline-block;
     height: 100%;
     text-align: right;
   }

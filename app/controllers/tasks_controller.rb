@@ -13,7 +13,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.project.has_permission(current_person)
       if @task.save
-          redirect_to @task.project
+          redirect_to @task
       else
           flash.now.alert = "Unable to create task"
           @roles = Role.where(project: @task.project)
@@ -48,6 +48,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def index
+    @tasks = Task.where(person: current_person)
+  end
+
   def destroy
     @task = Task.find(params[:id])
     project = @task.project
@@ -65,7 +69,12 @@ class TasksController < ApplicationController
       @task.status = "incomplete"
       @task.save
     end
-    redirect_to @task
+    respond_to do |format|
+      format.html do
+        redirect_to @task
+      end
+      format.js
+    end
   end
 
   def complete
@@ -74,13 +83,27 @@ class TasksController < ApplicationController
       @task.status = "complete"
       @task.save
     end
-    redirect_to @task
+    respond_to do |format|
+      format.html do
+        redirect_to @task
+      end
+      format.js
+    end
   end
 
   def volunteer
     @task = Task.find(params[:id])
     if @task.is_eligible?(current_person)
       @task.person = current_person
+      @task.save
+    end
+    redirect_to @task
+  end
+
+  def unassign
+    @task = Task.find(params[:id])
+    if @task.is_assignee?(current_person) or @task.has_permission?(current_person)
+      @task.person = nil
       @task.save
     end
     redirect_to @task

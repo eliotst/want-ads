@@ -1,12 +1,10 @@
 <div class="row">
     <div class="card">
         <div class="card-image empty">
-            <span class="card-title">Projects</span>
-            <% if can_create_projects? %>
-                <a href="<%= new_project_path %>" class="btn-floating halfway-fab waves-effect waves-light red">
-                    <i class="material-icons">add</i>
-                </a>
-            <% end %>
+            <span class="card-title">My Projects</span>
+            <a href="<%= new_project_path %>" class="btn-floating halfway-fab waves-effect waves-light red">
+              <i class="material-icons">add</i>
+            </a>
         </div>
         <div class="card-content">
             <table class="centered">
@@ -30,7 +28,7 @@
                         <% end %>
                     <% else %>
                         <tr>
-                            <td colspan=3>There are no active projects</td>
+                            <td colspan=3>There are no projects</td>
                         </tr>
                     <% end %>
                 </tbody>

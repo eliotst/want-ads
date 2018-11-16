@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col s8">
+    <div class="col s12 m8">
         <div class="card">
             <div class="card-image empty">
                 <span class="card-title">
@@ -31,8 +31,10 @@
             </div>
         </div>
     </div>
-    <%= render "roles", roles: @project.roles %>
-    <div class="col s12">
+    <div class="col m4 s12">
+        <%= render "roles", roles: @project.roles %>
+    </div>
+    <div class="col s12 m8">
         <% if @project.can_discuss?(current_person) %>
             <%= render 'project_conversation', conversation: @project.conversation %>
         <% end %>

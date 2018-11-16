@@ -1,5 +1,3 @@
-<div class="col s4">
-  <% @project.roles.each do |role| %>
-    <%= render "role", :role => role %>
-  <% end %>
-</div>
+<% @project.roles.each do |role| %>
+  <%= render "role", :role => role %>
+<% end %>

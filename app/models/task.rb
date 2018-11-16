@@ -15,6 +15,10 @@ class Task < ApplicationRecord
     self.status ||= "incomplete"
   end
 
+  def alternate_status
+    self.incomplete? ? "complete" : "incomplete"
+  end
+
   def assignee_name
     self.try(:person).try(:full_name) || self.try(:role).try(:title) || 'No One'
   end
@@ -29,5 +33,13 @@ class Task < ApplicationRecord
 
   def is_eligible?(person)
     self.person == nil && self.role != nil && self.role.is_assigned_to?(person)
+  end
+
+  def is_assignee?(person)
+    self.person == person
+  end
+
+  def possible_people
+    self.role.try(:people) or []
   end
 end

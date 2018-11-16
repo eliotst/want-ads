@@ -24,7 +24,7 @@ class Role < ApplicationRecord
   end
 
   def needs_people?
-    self.number_of_people == nil || self.number_of_people > self.people.length
+    self.number_of_people == nil || self.number_of_people >= self.people.length
   end
 
   def can_discuss(person)
@@ -41,5 +41,9 @@ class Role < ApplicationRecord
 
   def is_assigned_to?(person)
     self.person_roles.where(person: person).length > 0
+  end
+
+  def self.opportunities
+    Role.where('number_of_people is null or number_of_people < person_roles_count')
   end
 end

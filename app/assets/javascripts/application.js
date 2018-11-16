@@ -16,8 +16,32 @@
 //= require materialize-sprockets
 //= require_tree .
 
+var handleTaskClick = function(evt) {
+    var $button = $(evt.currentTarget);
+    var $icon = $button.find("i");
+    var checked = $icon.text() == "check_box";
+    var actionPath = checked ? $button.data("uncomplete-path") : $button.data("complete-path");
+    evt.preventDefault();
+    $.ajax({
+        url: actionPath,
+        data: {
+            authenticity_token: window._token
+        },
+        dataType: "json",
+        method: "POST"
+    }).then(function() {
+        if (checked) {
+            $icon.text("check_box_outline_blank");
+        } else {
+            $icon.text("check_box");
+        }
+    }).fail(function(error) {
+    });
+};
+
 var formsInit = function() {
     $('select').material_select();
+    $('.task-checkbox-btn').on("click", handleTaskClick);
 };
 $(document).on('turbolinks:load', formsInit);
 $(document).on('page:load', formsInit) //adaptation to turbolinks

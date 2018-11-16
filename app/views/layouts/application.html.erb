@@ -16,7 +16,19 @@
           <li>
             <%= link_to "Manage People", people_path %>
           </li>
+          <li>
+            <%= link_to "All Projects", projects_path(all: 1) %>
+          </li>
         <% end %>
+        <li>
+          <%= link_to "My Projects", projects_path(mine: 1) %>
+        </li>
+        <li>
+          <%= link_to "My Roles", roles_path(mine: 1) %>
+        </li>
+        <li>
+          <%= link_to "My Tasks", tasks_path(mine: 1) %>
+        </li>
         <li>
           <%= link_to "Logout", logout_path %>
         </li>
@@ -44,6 +56,7 @@
     <div class="container">
       <%= yield %>
     </div>
+    <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
     <script language="javascript">
       <% flash.each do |name, msg| %>
         Materialize.toast('<%= msg %>', 4000);

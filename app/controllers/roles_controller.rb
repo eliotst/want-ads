@@ -4,7 +4,7 @@ class RolesController < ApplicationController
     end
 
     def index
-        @roles = Role.all()
+        @roles = Role.opportunities
     end
 
     def destroy
